@@ -34,7 +34,12 @@ async function askGemini(userMessage) {
       })
     });
     const data = await response.json();
-    return data.candidates[0].content.parts[0].text;
+   if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+  return data.candidates[0].content.parts[0].text;
+} else {
+  console.error('Gemini Response:', JSON.stringify(data));
+  return 'សូមអភ័យទោស មានបញ្ហា។ សូមព្យាយាមម្តងទៀត។';
+}
   } catch (err) {
     console.error('Gemini Error:', err);
     return 'សូមអភ័យទោស មានបញ្ហាបច្ចេកទេស។ សូមព្យាយាមម្តងទៀត។';
