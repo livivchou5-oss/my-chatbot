@@ -28,10 +28,11 @@ async function askGemini(userMessage) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [{ parts: [{ text: userMessage }] }],
-        generationConfig: { maxOutputTokens: 1000 }
-      })
+  contents: [{
+    parts: [{ text: SYSTEM_PROMPT + '\n\nUser: ' + userMessage }]
+  }],
+  generationConfig: { maxOutputTokens: 1000 }
+})
     });
     const data = await response.json();
    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
